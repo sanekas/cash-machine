@@ -22,12 +22,19 @@ public class CashManipulatorImpl implements CashManipulator {
     }
 
     @Override
-    public void getCash(Map<Nominal, Integer> commandOptions) {
+    public Map<Nominal, Integer> getCash(Map<Nominal, Integer> commandOptions) {
+        Map<Nominal, Integer> removableCash = new EnumMap<>(Nominal.class);
         Integer requiredCash = commandOptions.get(Nominal.ANY);
         if (requiredCash >= state) {
-
+            for (Map.Entry<Nominal, Integer> cashPair : cash.entrySet()) {
+                int removablePart = requiredCash / cashPair.getKey().getNominal();
+                cash.merge(cashPair.getKey(), -removablePart, Integer::sum);
+                removableCash.merge(cashPair.getKey(), removablePart, Integer::sum);
+                requiredCash -= removablePart * cashPair.getKey().getNominal();
+                state -= cashPair.getKey().getNominal();
+            }
         }
-
+        return removableCash;
     }
 
     @Override
