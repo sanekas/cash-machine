@@ -29,5 +29,6 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
+	compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

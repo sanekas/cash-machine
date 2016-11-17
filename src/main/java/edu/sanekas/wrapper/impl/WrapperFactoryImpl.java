@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 @Service
-public class WrapperFactoryImpl<T> implements WrapperFactory<T> {
+public class WrapperFactoryImpl implements WrapperFactory {
 
     @Override
     public InputWrapper createInputWrapper(Operation operation, Map<Nominal, Integer> commandOptions) {
@@ -21,7 +21,7 @@ public class WrapperFactoryImpl<T> implements WrapperFactory<T> {
     }
 
     @Override
-    public OutputWrapper<T> createOutputWrapper() {
+    public <T> OutputWrapper<T> createOutputWrapper() {
         return new OutputWrapperImpl<>();
     }
 }

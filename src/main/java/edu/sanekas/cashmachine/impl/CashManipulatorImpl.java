@@ -1,4 +1,4 @@
-package edu.sanekas.cashmachine;
+package edu.sanekas.cashmachine.impl;
 
 import edu.sanekas.api.Nominal;
 import edu.sanekas.cashmachine.api.CashManipulator;

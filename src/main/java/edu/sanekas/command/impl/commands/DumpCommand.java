@@ -5,19 +5,15 @@ import edu.sanekas.cashmachine.api.CashManipulator;
 import edu.sanekas.command.api.Command;
 import edu.sanekas.wrapper.api.OutputWrapper;
 import edu.sanekas.wrapper.api.WrapperFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Component
 public class DumpCommand implements Command {
 
     private final CashManipulator cashManipulator;
-    private final WrapperFactory<Map<Nominal, Integer>> wrapperFactory;
+    private final WrapperFactory wrapperFactory;
 
-    @Autowired
-    public DumpCommand(CashManipulator cashManipulator, WrapperFactory<Map<Nominal, Integer>> wrapperFactory) {
+    public DumpCommand(CashManipulator cashManipulator, WrapperFactory wrapperFactory) {
         this.cashManipulator = cashManipulator;
         this.wrapperFactory = wrapperFactory;
     }

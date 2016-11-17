@@ -5,7 +5,7 @@ import edu.sanekas.api.Operation;
 
 import java.util.Map;
 
-public interface WrapperFactory<T> {
+public interface WrapperFactory {
     InputWrapper createInputWrapper(Operation operation, Map<Nominal, Integer> commandOptions);
-    OutputWrapper<T> createOutputWrapper();
+    <T> OutputWrapper<T> createOutputWrapper();
 }

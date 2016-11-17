@@ -13,9 +13,7 @@ import org.jetbrains.annotations.Contract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -29,7 +27,7 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
 
     private static final String PREFIX = ">";
 
-    private final BufferedReader reader;
+    private BufferedReader reader;
 
     private final Validator optionsValidator;
     private final WrapperFactory wrapperFactory;
@@ -38,11 +36,13 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
     public ConsoleProcesserImpl(Validator optionsValidator, WrapperFactory wrapperFactory) {
         this.optionsValidator = optionsValidator;
         this.wrapperFactory = wrapperFactory;
-        this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     @Override
     public InputWrapper getProcessedInput() {
+        if (reader == null) {
+            reader = new BufferedReader(new InputStreamReader(System.in));
+        }
         printPrefix();
         String input;
         try {
