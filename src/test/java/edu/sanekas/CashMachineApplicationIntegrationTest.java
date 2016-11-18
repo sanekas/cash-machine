@@ -42,7 +42,7 @@ public class CashMachineApplicationIntegrationTest {
 	}
 
 	@Test
-	public void quitTest() throws IOException {
+	public void basicIntegrationTest() throws IOException {
 		List<String> out = Files.readAllLines(Paths.get(SYSTEM_OUT_FILE.getPath()));
 		List<String> outEtalon = Files.readAllLines(Paths.get(SYSTEM_OUT_ETALON.getPath()));
 		List<String> valuableOut = out.subList(11, out.size());
