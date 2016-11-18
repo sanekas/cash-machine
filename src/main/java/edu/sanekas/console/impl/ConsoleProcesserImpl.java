@@ -55,7 +55,7 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
 
     @Override
     public void printResult(OutputWrapper outputWrapper) {
-        System.out.println(outputWrapper);
+        printString(outputWrapper.toString());
     }
 
     /**
@@ -109,7 +109,6 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
 
 
     private void printString(String s) {
-        printPrefix();
         System.out.println(s);
     }
 

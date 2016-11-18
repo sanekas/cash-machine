@@ -22,6 +22,11 @@ public class PutCommand implements Command {
         int cash = cashManipulator.putCash(commandOptions);
         OutputWrapper<Integer> outputWrapper = wrapperFactory.createOutputWrapper();
         outputWrapper.setWrappedEntity(cash);
+        prepareOutput(outputWrapper);
         return outputWrapper;
+    }
+
+    private void prepareOutput(OutputWrapper<Integer> outputWrapper) {
+        outputWrapper.setOutputRepresentation(outputWrapper.getWrappedEntity().toString().trim());
     }
 }

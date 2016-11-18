@@ -22,6 +22,11 @@ public class StateCommand implements Command {
         int cash = cashManipulator.state();
         OutputWrapper<Integer> outputWrapper = wrapperFactory.createOutputWrapper();
         outputWrapper.setWrappedEntity(cash);
+        prepareOutput(outputWrapper);
         return outputWrapper;
+    }
+
+    private void prepareOutput(OutputWrapper<Integer> outputWrapper) {
+        outputWrapper.setOutputRepresentation(outputWrapper.getWrappedEntity().toString().trim());
     }
 }

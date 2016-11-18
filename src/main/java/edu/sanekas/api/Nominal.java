@@ -43,4 +43,9 @@ public enum Nominal {
     public int getNominal() {
         return nominal;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(nominal);
+    }
 }

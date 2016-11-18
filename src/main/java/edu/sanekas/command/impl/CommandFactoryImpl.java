@@ -28,7 +28,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case GET: return new GetCommand(cashManipulator, wrapperFactory);
             case STATE: return new StateCommand(cashManipulator, wrapperFactory);
             case DUMP: return new DumpCommand(cashManipulator, wrapperFactory);
-            case QUIT: return new QuitCommand();
+            case QUIT: return new QuitCommand(); // mock
         }
 
         throw new IllegalArgumentException("Operation: " + operation + " doesn't exist!");
