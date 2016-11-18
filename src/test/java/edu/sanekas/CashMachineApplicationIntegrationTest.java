@@ -7,7 +7,11 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -17,16 +21,21 @@ import java.util.List;
 public class CashMachineApplicationIntegrationTest {
 	private static final Logger LOGGER = Logger.getLogger(CashMachineApplicationIntegrationTest.class);
 
-	private static final String SYSTEM_IN_FILE = "src/test/resources/quit_test_in.txt";
-	private static final String SYSTEM_OUT_FILE = "src/test/resources/quit_test_out.txt";
-	private static final String SYSTEM_OUT__ETALON = "src/test/resources/test_out_etalon.txt";
+	private static final URL SYSTEM_IN_FILE;
+	private static final URL SYSTEM_OUT_FILE;
+	private static final URL SYSTEM_OUT_ETALON;
 
 
 	static {
+		SYSTEM_IN_FILE = Thread.currentThread().getContextClassLoader().getResource("quit_test_in.txt");
+		SYSTEM_OUT_FILE = Thread.currentThread().getContextClassLoader().getResource("quit_test_out.txt");
+		SYSTEM_OUT_ETALON = Thread.currentThread().getContextClassLoader().getResource("test_out_etalon.txt");
 		try {
-			System.setIn(new FileInputStream(SYSTEM_IN_FILE));
-			System.setOut(new PrintStream(new FileOutputStream(SYSTEM_OUT_FILE)));
-		} catch (FileNotFoundException e) {
+			if (SYSTEM_IN_FILE != null && SYSTEM_OUT_FILE != null) {
+				System.setIn(new FileInputStream(SYSTEM_IN_FILE.getPath()));
+				System.setOut(new PrintStream(new FileOutputStream(SYSTEM_OUT_FILE.getPath())));
+			}
+		} catch (Exception e) {
 			LOGGER.error("Fail to init IO files", e);
 			throw new RuntimeException(e);
 		}
@@ -34,8 +43,8 @@ public class CashMachineApplicationIntegrationTest {
 
 	@Test
 	public void quitTest() throws IOException {
-		List<String> out = Files.readAllLines(Paths.get(SYSTEM_OUT_FILE));
-		List<String> outEtalon = Files.readAllLines(Paths.get(SYSTEM_OUT__ETALON));
+		List<String> out = Files.readAllLines(Paths.get(SYSTEM_OUT_FILE.getPath()));
+		List<String> outEtalon = Files.readAllLines(Paths.get(SYSTEM_OUT_ETALON.getPath()));
 		List<String> valuableOut = out.subList(11, out.size());
  		Assert.assertTrue(valuableOut.equals(outEtalon));
 	}
