@@ -1,10 +1,8 @@
 package edu.sanekas.console.api;
 
-import edu.sanekas.api.Nominal;
 import edu.sanekas.api.Operation;
-
-import java.util.Map;
+import edu.sanekas.wrapper.api.InputWrapper;
 
 public interface Validator {
-    Map<Nominal, Integer> validateOptions(Operation operation, String[] options);
+    InputWrapper validateOptions(Operation operation, String[] options);
 }

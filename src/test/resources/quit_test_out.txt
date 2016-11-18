@@ -1,12 +1,23 @@
-01:41:28.935 [main] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@17695df3 testClass = CashMachineApplicationIntegrationTest, testInstance = edu.sanekas.CashMachineApplicationIntegrationTest@46238e3f, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@6c9f5c0d testClass = CashMachineApplicationIntegrationTest, locations = '{}', classes = '{class edu.sanekas.CashMachineApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.SpringBootTestContextCustomizer@56f4468b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@100fc185, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@475530b9], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]]].
-01:41:28.976 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
-01:41:28.976 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
-01:41:28.976 [main] DEBUG org.springframework.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
-01:41:28.978 [main] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
-01:41:28.978 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [Inlined Test Properties] PropertySource with highest search precedence
+00:41:57.429 [main] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@2f490758 testClass = CashMachineApplicationIntegrationTest, testInstance = edu.sanekas.CashMachineApplicationIntegrationTest@49c43f4e, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@101df177 testClass = CashMachineApplicationIntegrationTest, locations = '{}', classes = '{class edu.sanekas.CashMachineApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.SpringBootTestContextCustomizer@5419f379, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4f933fd1, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3532ec19], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]]].
+00:41:57.495 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
+00:41:57.495 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
+00:41:57.495 [main] DEBUG org.springframework.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+00:41:57.498 [main] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+00:41:57.498 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [Inlined Test Properties] PropertySource with highest search precedence
   _____         __     __  ___         __   _
  / ___/__ ____ / /    /  |/  /__ _____/ /  (_)__  ___
 / /__/ _ `(_-</ _ \  / /|_/ / _ `/ __/ _ \/ / _ \/ -_)
 \___/\_,_/___/_//_/ /_/  /_/\_,_/\__/_//_/_/_//_/\__/
 
+>Invalid options!
+>10000
+>10500
+>5=1, total 5
+>10=2,5=1, total 25
+>10=1, total 10
+without 3
+>10 997
+5 98
+>10460
+>Operation is invalid!
 >

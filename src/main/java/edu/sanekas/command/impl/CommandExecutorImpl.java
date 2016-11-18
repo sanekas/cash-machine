@@ -34,6 +34,6 @@ public final class CommandExecutorImpl implements CommandExecutor {
 
     @Override
     public final OutputWrapper execute(InputWrapper inputWrapper) {
-        return operationCommandMap.get(inputWrapper.getOperation()).execute(inputWrapper.getCommandOptions());
+        return operationCommandMap.get(inputWrapper.getOperation()).execute(inputWrapper);
     }
 }

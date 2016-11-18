@@ -1,6 +1,5 @@
 package edu.sanekas.console.impl;
 
-import edu.sanekas.api.Nominal;
 import edu.sanekas.api.Operation;
 import edu.sanekas.console.api.ConsoleProcesser;
 import edu.sanekas.console.api.Validator;
@@ -13,9 +12,10 @@ import org.jetbrains.annotations.Contract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * The class implements basic validation of input data and encapsulates work with command line
@@ -90,15 +90,13 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
             }
 
             //Validate options
-            Map<Nominal, Integer> validatedOptions;
+            InputWrapper inputWrapper;
             try {
-                validatedOptions = optionsValidator.
+                inputWrapper = optionsValidator.
                         validateOptions(operation, Arrays.copyOfRange(command, 1, command.length));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
                 throw new IllegalArgumentException("Invalid options!", e);
             }
-
-            InputWrapper inputWrapper = wrapperFactory.createInputWrapper(operation, validatedOptions);
             LOGGER.info("Input command is processed: " + inputWrapper);
 
             return inputWrapper;

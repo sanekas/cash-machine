@@ -1,0 +1,12 @@
+>Invalid options!
+>10000
+>10500
+>5=1, total 5
+>10=2,5=1, total 25
+>10=1, total 10
+without 3
+>10 997
+5 98
+>10460
+>Operation is invalid!
+>

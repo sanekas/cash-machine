@@ -3,6 +3,7 @@ package edu.sanekas.command.impl.commands;
 import edu.sanekas.api.Nominal;
 import edu.sanekas.cashmachine.api.CashManipulator;
 import edu.sanekas.command.api.Command;
+import edu.sanekas.wrapper.api.InputWrapper;
 import edu.sanekas.wrapper.api.OutputWrapper;
 import edu.sanekas.wrapper.api.WrapperFactory;
 
@@ -18,27 +19,34 @@ public class GetCommand implements Command {
     }
 
     @Override
-    public OutputWrapper execute(Map<Nominal, Integer> commandOptions) {
-        Map<Nominal, Integer> cash = cashManipulator.getCash(commandOptions);
+    public OutputWrapper execute(InputWrapper inputWrapper) {
+        Map<Nominal, Integer> cash = cashManipulator.getCash(inputWrapper);
         OutputWrapper<Map<Nominal, Integer>> outputWrapper = wrapperFactory.createOutputWrapper();
-        int receivedCash = cash.values().stream().mapToInt(Integer::intValue).sum();
-        if (commandOptions.get(Nominal.ANY) - receivedCash > 0) {
-            cash.put(Nominal.ANY, receivedCash);
+        int receivedCash = 0;
+        for (Map.Entry<Nominal, Integer> cashPair : cash.entrySet()) {
+            receivedCash += cashPair.getValue() * cashPair.getKey().getNominal();
         }
+        cash.put(Nominal.ANY, receivedCash);
         outputWrapper.setWrappedEntity(cash);
-        prepareOutput(outputWrapper);
+        prepareOutput(outputWrapper, inputWrapper.getCash());
         return outputWrapper;
     }
 
-    private void prepareOutput(OutputWrapper<Map<Nominal, Integer>> outputWrapper) {
+    private void prepareOutput(OutputWrapper<Map<Nominal, Integer>> outputWrapper, int requestedCash) {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Nominal, Integer> cashPair : outputWrapper.getWrappedEntity().entrySet()) {
-            if (cashPair.getKey() != Nominal.ANY) {
+            if (cashPair.getKey() != Nominal.ANY && cashPair.getValue() != 0) {
                 result.append(cashPair.getKey()).append("=").append(cashPair.getValue()).append(",");
             }
         }
-        if (outputWrapper.getWrappedEntity().containsKey(Nominal.ANY)) {
-            result.append(" total ").append(outputWrapper.getWrappedEntity().get(Nominal.ANY));
+
+        int totalReceivedCash = outputWrapper.getWrappedEntity().get(Nominal.ANY);
+        result.append(" total ").append(totalReceivedCash);
+
+        int dif = totalReceivedCash - requestedCash;
+
+        if (dif < 0) {
+            result.append("\n" + "without ").append(String.valueOf(-dif));
         }
         outputWrapper.setOutputRepresentation(result.toString().trim());
 

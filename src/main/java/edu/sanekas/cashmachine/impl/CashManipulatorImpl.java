@@ -2,6 +2,7 @@ package edu.sanekas.cashmachine.impl;
 
 import edu.sanekas.api.Nominal;
 import edu.sanekas.cashmachine.api.CashManipulator;
+import edu.sanekas.wrapper.api.InputWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
@@ -13,25 +14,32 @@ public class CashManipulatorImpl implements CashManipulator {
     private int state = 0;
 
     @Override
-    public int putCash(Map<Nominal, Integer> commandOptions) {
-        for (Map.Entry<Nominal, Integer> cashPair : commandOptions.entrySet()) {
-            cash.merge(cashPair.getKey(), cashPair.getValue(), Integer::sum);
-            state += cashPair.getValue() * cashPair.getKey().getNominal();
+    public int putCash(InputWrapper inputWrapper) {
+        cash.merge(inputWrapper.getNominal(), inputWrapper.getCash(), Integer::sum);
+        int receivedCash = inputWrapper.getCash() * inputWrapper.getNominal().getNominal();
+        if (receivedCash < 0 || state + receivedCash >= Integer.MAX_VALUE) {
+            throw new RuntimeException("Too much money!");
         }
+        state += receivedCash;
         return state;
     }
 
     @Override
-    public Map<Nominal, Integer> getCash(Map<Nominal, Integer> commandOptions) {
+    public Map<Nominal, Integer> getCash(InputWrapper inputWrapper) {
         Map<Nominal, Integer> removableCash = new EnumMap<>(Nominal.class);
-        Integer requiredCash = commandOptions.get(Nominal.ANY);
-        if (requiredCash >= state) {
+        Integer requiredCash = inputWrapper.getCash();
+        if (requiredCash >= Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too much money!");
+        }
+        if (requiredCash <= state) {
             for (Map.Entry<Nominal, Integer> cashPair : cash.entrySet()) {
                 int removablePart = requiredCash / cashPair.getKey().getNominal();
-                cash.merge(cashPair.getKey(), -removablePart, Integer::sum);
-                removableCash.merge(cashPair.getKey(), removablePart, Integer::sum);
-                requiredCash -= removablePart * cashPair.getKey().getNominal();
-                state -= cashPair.getKey().getNominal();
+                if (cashPair.getValue() - removablePart >= 0) {
+                    cash.merge(cashPair.getKey(), -removablePart, Integer::sum);
+                    removableCash.merge(cashPair.getKey(), removablePart, Integer::sum);
+                    requiredCash -= removablePart * cashPair.getKey().getNominal();
+                    state -= cashPair.getKey().getNominal() * removablePart;
+                }
             }
         }
         return removableCash;

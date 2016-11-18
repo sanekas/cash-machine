@@ -4,22 +4,37 @@ import edu.sanekas.api.Nominal;
 import edu.sanekas.api.Operation;
 import edu.sanekas.wrapper.api.InputWrapper;
 
-import java.util.Map;
-
 public class InputWrapperImpl implements InputWrapper {
     private final Operation operation;
-    private final Map<Nominal, Integer> commandOptions;
+    private final Nominal nominal;
+    private final Integer cash;
 
-    public InputWrapperImpl(Operation operation, Map<Nominal, Integer> commandOptions) {
+    //TODO: Replace by builder
+
+    public InputWrapperImpl(Operation operation) {
         this.operation = operation;
-        this.commandOptions = commandOptions;
+        this.nominal = null;
+        this.cash = null;
     }
 
+    public InputWrapperImpl(Operation operation, Nominal nominal, Integer cash) {
+        this.operation = operation;
+        this.nominal = nominal;
+        this.cash = cash;
+    }
+
+    @Override
     public Operation getOperation() {
         return operation;
     }
 
-    public Map<Nominal, Integer> getCommandOptions() {
-        return commandOptions;
+    @Override
+    public Nominal getNominal() {
+        return nominal;
+    }
+
+    @Override
+    public Integer getCash() {
+        return cash;
     }
 }

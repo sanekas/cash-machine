@@ -1,14 +1,12 @@
 package edu.sanekas.command.impl.commands;
 
-import edu.sanekas.api.Nominal;
 import edu.sanekas.command.api.Command;
+import edu.sanekas.wrapper.api.InputWrapper;
 import edu.sanekas.wrapper.api.OutputWrapper;
-
-import java.util.Map;
 
 public class QuitCommand implements Command {
     @Override
-    public OutputWrapper execute(Map<Nominal, Integer> commandOptions) {
+    public OutputWrapper execute(InputWrapper inputWrapper) {
         return null;
     }
 }
