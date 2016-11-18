@@ -27,9 +27,9 @@ public class CashMachineApplicationIntegrationTest {
 
 
 	static {
-		SYSTEM_IN_FILE = Thread.currentThread().getContextClassLoader().getResource("quit_test_in.txt");
-		SYSTEM_OUT_FILE = Thread.currentThread().getContextClassLoader().getResource("quit_test_out.txt");
-		SYSTEM_OUT_ETALON = Thread.currentThread().getContextClassLoader().getResource("test_out_etalon.txt");
+		SYSTEM_IN_FILE = Thread.currentThread().getContextClassLoader().getResource("smoke_integrartion_test_in.txt");
+		SYSTEM_OUT_FILE = Thread.currentThread().getContextClassLoader().getResource("smoke_integration_test_out.txt");
+		SYSTEM_OUT_ETALON = Thread.currentThread().getContextClassLoader().getResource("smoke_integration_test_out_etalon.txt");
 		try {
 			if (SYSTEM_IN_FILE != null && SYSTEM_OUT_FILE != null) {
 				System.setIn(new FileInputStream(SYSTEM_IN_FILE.getPath()));
