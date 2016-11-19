@@ -6,5 +6,4 @@ get 25
 get 13
 dump
 state
-10460
 quit

@@ -34,6 +34,7 @@ public class CashMachineFacade implements ApplicationRunner {
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
                 LOGGER.error(e);
+                LOGGER.info(e.getCause());
             }
         } while (true);
     }

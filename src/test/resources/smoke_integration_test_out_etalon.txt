@@ -8,5 +8,4 @@ without 3
 >10 997
 5 98
 >10460
->Operation is invalid!
 >

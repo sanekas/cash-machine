@@ -1,10 +1,12 @@
 package edu.sanekas;
 
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.rule.OutputCapture;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileInputStream;
@@ -25,20 +27,33 @@ public class CashMachineApplicationIntegrationTest {
 	private static final URL SYSTEM_OUT_FILE;
 	private static final URL SYSTEM_OUT_ETALON;
 
+	private static final FileInputStream FILE_INPUT_STREAM;
+	private static final FileOutputStream FILE_OUTPUT_STREAM;
+
+	OutputCapture outputCapture = new OutputCapture();
+
 
 	static {
-		SYSTEM_IN_FILE = Thread.currentThread().getContextClassLoader().getResource("smoke_integrartion_test_in.txt");
-		SYSTEM_OUT_FILE = Thread.currentThread().getContextClassLoader().getResource("smoke_integration_test_out.txt");
-		SYSTEM_OUT_ETALON = Thread.currentThread().getContextClassLoader().getResource("smoke_integration_test_out_etalon.txt");
+
+		SYSTEM_IN_FILE = getResource("smoke_integrartion_test_in.txt");
+		SYSTEM_OUT_FILE = getResource("smoke_integration_test_out.txt");
+		SYSTEM_OUT_ETALON = getResource("smoke_integration_test_out_etalon.txt");
+
 		try {
-			if (SYSTEM_IN_FILE != null && SYSTEM_OUT_FILE != null) {
-				System.setIn(new FileInputStream(SYSTEM_IN_FILE.getPath()));
-				System.setOut(new PrintStream(new FileOutputStream(SYSTEM_OUT_FILE.getPath())));
-			}
+			FILE_INPUT_STREAM = new FileInputStream(SYSTEM_IN_FILE.getPath());
+			FILE_OUTPUT_STREAM = new FileOutputStream(SYSTEM_OUT_FILE.getPath());
+
+			System.setIn(FILE_INPUT_STREAM);
+			System.setOut(new PrintStream(FILE_OUTPUT_STREAM, true));
+
 		} catch (Exception e) {
 			LOGGER.error("Fail to init IO files", e);
 			throw new RuntimeException(e);
 		}
+	}
+
+	private static URL getResource(String fileName) {
+		return Thread.currentThread().getContextClassLoader().getResource(fileName);
 	}
 
 	@Test
@@ -47,6 +62,12 @@ public class CashMachineApplicationIntegrationTest {
 		List<String> outEtalon = Files.readAllLines(Paths.get(SYSTEM_OUT_ETALON.getPath()));
 		List<String> valuableOut = out.subList(11, out.size());
  		Assert.assertTrue(valuableOut.equals(outEtalon));
+	}
+
+	@After
+	public void closeStreams() throws IOException {
+		FILE_INPUT_STREAM.close();
+		FILE_OUTPUT_STREAM.close();
 	}
 
 }
