@@ -5,7 +5,6 @@ import edu.sanekas.console.api.ConsoleProcesser;
 import edu.sanekas.console.api.Validator;
 import edu.sanekas.wrapper.api.InputWrapper;
 import edu.sanekas.wrapper.api.OutputWrapper;
-import edu.sanekas.wrapper.api.WrapperFactory;
 import edu.sanekas.wrapper.impl.wrappers.InputWrapperImpl;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.Contract;
@@ -17,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import static edu.sanekas.api.GeneralDefaults.*;
+
 /**
  * The class implements basic validation of input data and encapsulates work with command line
  */
@@ -25,17 +26,13 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
 
     private static final Logger LOGGER = Logger.getLogger(ConsoleProcesserImpl.class);
 
-    private static final String PREFIX = ">";
-
     private BufferedReader reader;
 
     private final Validator optionsValidator;
-    private final WrapperFactory wrapperFactory;
 
     @Autowired
-    public ConsoleProcesserImpl(Validator optionsValidator, WrapperFactory wrapperFactory) {
+    public ConsoleProcesserImpl(Validator optionsValidator) {
         this.optionsValidator = optionsValidator;
-        this.wrapperFactory = wrapperFactory;
     }
 
     @Override
@@ -55,7 +52,9 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
 
     @Override
     public void printResult(OutputWrapper outputWrapper) {
-        printString(outputWrapper.toString());
+        if (outputWrapper != null && !outputWrapper.toString().isEmpty()) {
+            printString(outputWrapper.toString());
+        }
     }
 
     /**
@@ -69,7 +68,8 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
             //Validate empty command
             String[] command = input.trim().split("[\\s]+");
             if (command.length == 0) {
-                throw new IllegalArgumentException("Command is invalid!");
+                printString(INVALID_COMMAND);
+                throw new IllegalArgumentException(INVALID_COMMAND);
             }
 
             //Validate operation
@@ -77,7 +77,8 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
             try {
                 operation = Operation.valueOf(command[0].toUpperCase());
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Operation is invalid!", e);
+                printString(INVALID_OPERATION);
+                throw new IllegalArgumentException(INVALID_OPERATION, e);
             }
 
             //Close reader, if user wants to quit
@@ -95,13 +96,15 @@ public final class ConsoleProcesserImpl implements ConsoleProcesser {
                 inputWrapper = optionsValidator.
                         validateOptions(operation, Arrays.copyOfRange(command, 1, command.length));
             } catch (RuntimeException e) {
-                throw new IllegalArgumentException("Invalid options!", e);
+                printString(INVALID_OPTIONS);
+                throw new IllegalArgumentException(INVALID_OPTIONS, e);
             }
             LOGGER.info("Input command is processed: " + inputWrapper);
 
             return inputWrapper;
         } else {
-            throw new IllegalArgumentException("Command is invalid!");
+            printString(INVALID_COMMAND);
+            throw new IllegalArgumentException(INVALID_COMMAND);
         }
     }
 

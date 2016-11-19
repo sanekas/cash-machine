@@ -1,5 +1,6 @@
 package edu.sanekas.command.impl;
 
+import edu.sanekas.api.GeneralDefaults;
 import edu.sanekas.api.Operation;
 import edu.sanekas.cashmachine.api.CashManipulator;
 import edu.sanekas.command.api.Command;
@@ -31,6 +32,6 @@ public class CommandFactoryImpl implements CommandFactory {
             case QUIT: return new QuitCommand(); // mock
         }
 
-        throw new IllegalArgumentException("Operation: " + operation + " doesn't exist!");
+        throw new IllegalArgumentException(String.format(GeneralDefaults.OPERATION_NOT_EXIST, operation));
     }
 }

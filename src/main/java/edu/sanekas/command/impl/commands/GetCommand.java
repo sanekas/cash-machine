@@ -34,11 +34,9 @@ public class GetCommand implements Command {
 
     private void prepareOutput(OutputWrapper<Map<Nominal, Integer>> outputWrapper, int requestedCash) {
         StringBuilder result = new StringBuilder();
-        for (Map.Entry<Nominal, Integer> cashPair : outputWrapper.getWrappedEntity().entrySet()) {
-            if (cashPair.getKey() != Nominal.ANY && cashPair.getValue() != 0) {
-                result.append(cashPair.getKey()).append("=").append(cashPair.getValue()).append(",");
-            }
-        }
+        outputWrapper.getWrappedEntity().entrySet().stream()
+                .filter(cashPair -> cashPair.getKey() != Nominal.ANY && cashPair.getValue() != 0)
+                .forEach(cashPair -> result.append(cashPair.getKey()).append("=").append(cashPair.getValue()).append(","));
 
         int totalReceivedCash = outputWrapper.getWrappedEntity().get(Nominal.ANY);
         result.append(" total ").append(totalReceivedCash);

@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.rule.OutputCapture;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileInputStream;
@@ -20,8 +19,8 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class CashMachineApplicationIntegrationTest {
-	private static final Logger LOGGER = Logger.getLogger(CashMachineApplicationIntegrationTest.class);
+public class CashMachineSmokeIntegrationTest {
+	private static final Logger LOGGER = Logger.getLogger(CashMachineSmokeIntegrationTest.class);
 
 	private static final URL SYSTEM_IN_FILE;
 	private static final URL SYSTEM_OUT_FILE;
@@ -29,9 +28,6 @@ public class CashMachineApplicationIntegrationTest {
 
 	private static final FileInputStream FILE_INPUT_STREAM;
 	private static final FileOutputStream FILE_OUTPUT_STREAM;
-
-	OutputCapture outputCapture = new OutputCapture();
-
 
 	static {
 
@@ -60,7 +56,7 @@ public class CashMachineApplicationIntegrationTest {
 	public void basicIntegrationTest() throws IOException {
 		List<String> out = Files.readAllLines(Paths.get(SYSTEM_OUT_FILE.getPath()));
 		List<String> outEtalon = Files.readAllLines(Paths.get(SYSTEM_OUT_ETALON.getPath()));
-		List<String> valuableOut = out.subList(11, out.size());
+		List<String> valuableOut = out.subList(out.size() - 11, out.size()); // last 11 strings are CashMachine output
  		Assert.assertTrue(valuableOut.equals(outEtalon));
 	}
 

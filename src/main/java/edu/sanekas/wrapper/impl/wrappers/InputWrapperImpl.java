@@ -9,8 +9,6 @@ public class InputWrapperImpl implements InputWrapper {
     private final Nominal nominal;
     private final Integer cash;
 
-    //TODO: Replace by builder
-
     public InputWrapperImpl(Operation operation) {
         this.operation = operation;
         this.nominal = null;

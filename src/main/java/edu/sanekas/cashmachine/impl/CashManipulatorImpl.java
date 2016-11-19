@@ -1,5 +1,6 @@
 package edu.sanekas.cashmachine.impl;
 
+import edu.sanekas.api.GeneralDefaults;
 import edu.sanekas.api.Nominal;
 import edu.sanekas.cashmachine.api.CashManipulator;
 import edu.sanekas.wrapper.api.InputWrapper;
@@ -17,8 +18,8 @@ public class CashManipulatorImpl implements CashManipulator {
     public int putCash(InputWrapper inputWrapper) {
         cash.merge(inputWrapper.getNominal(), inputWrapper.getCash(), Integer::sum);
         int receivedCash = inputWrapper.getCash() * inputWrapper.getNominal().getNominal();
-        if (receivedCash < 0 || state + receivedCash >= Integer.MAX_VALUE) {
-            throw new RuntimeException("Too much money!");
+        if (receivedCash < 0 || state + receivedCash >= Integer.MAX_VALUE || state + receivedCash < 0) {
+            throw new RuntimeException(GeneralDefaults.TOO_MUCH_MONEY);
         }
         state += receivedCash;
         return state;
@@ -29,17 +30,16 @@ public class CashManipulatorImpl implements CashManipulator {
         Map<Nominal, Integer> removableCash = new EnumMap<>(Nominal.class);
         Integer requiredCash = inputWrapper.getCash();
         if (requiredCash >= Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too much money!");
+            throw new IllegalArgumentException(GeneralDefaults.TOO_MUCH_MONEY);
         }
         if (requiredCash <= state) {
             for (Map.Entry<Nominal, Integer> cashPair : cash.entrySet()) {
                 int removablePart = requiredCash / cashPair.getKey().getNominal();
-                if (cashPair.getValue() - removablePart >= 0) {
-                    cash.merge(cashPair.getKey(), -removablePart, Integer::sum);
-                    removableCash.merge(cashPair.getKey(), removablePart, Integer::sum);
-                    requiredCash -= removablePart * cashPair.getKey().getNominal();
-                    state -= cashPair.getKey().getNominal() * removablePart;
-                }
+                int availablePart = (cashPair.getValue() - removablePart >= 0) ? removablePart : cashPair.getValue();
+                cash.merge(cashPair.getKey(), -availablePart, Integer::sum);
+                removableCash.merge(cashPair.getKey(), availablePart, Integer::sum);
+                requiredCash -= availablePart * cashPair.getKey().getNominal();
+                state -= cashPair.getKey().getNominal() * availablePart;
             }
         }
         return removableCash;

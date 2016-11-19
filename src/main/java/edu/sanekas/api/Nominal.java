@@ -37,7 +37,7 @@ public enum Nominal {
             case 3: return THREE;
             case 1: return ONE;
         }
-        throw new IllegalArgumentException("Invalid nominal!");
+        throw new IllegalArgumentException(GeneralDefaults.INVALID_NOMINAL);
     }
 
     public int getNominal() {

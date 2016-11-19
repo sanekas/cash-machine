@@ -1,4 +1,4 @@
->Invalid options!
+>Options are invalid!
 >10000
 >10500
 >5=1, total 5

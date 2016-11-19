@@ -32,9 +32,7 @@ public class CashMachineFacade implements ApplicationRunner {
                 OutputWrapper outputWrapper = cashMachine.executeCommand(inputWrapper);
                 cashMachine.processOutput(outputWrapper);
             } catch (RuntimeException e) {
-                System.out.println(e.getMessage());
                 LOGGER.error(e);
-                LOGGER.info(e.getCause());
             }
         } while (true);
     }
