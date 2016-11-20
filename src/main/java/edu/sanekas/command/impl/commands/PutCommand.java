@@ -17,14 +17,14 @@ public class PutCommand implements Command {
 
     @Override
     public OutputWrapper execute(InputWrapper inputWrapper) {
-        int cash = cashManipulator.putCash(inputWrapper);
-        OutputWrapper<Integer> outputWrapper = wrapperFactory.createOutputWrapper();
+        long cash = cashManipulator.putCash(inputWrapper);
+        OutputWrapper<Long> outputWrapper = wrapperFactory.createOutputWrapper();
         outputWrapper.setWrappedEntity(cash);
         prepareOutput(outputWrapper);
         return outputWrapper;
     }
 
-    private void prepareOutput(OutputWrapper<Integer> outputWrapper) {
+    private void prepareOutput(OutputWrapper<Long> outputWrapper) {
         outputWrapper.setOutputRepresentation(outputWrapper.getWrappedEntity().toString().trim());
     }
 }

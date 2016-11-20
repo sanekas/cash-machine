@@ -21,14 +21,14 @@ public class DumpCommand implements Command {
 
     @Override
     public OutputWrapper execute(InputWrapper inputWrapper) {
-        Map<Nominal, Integer> dump = cashManipulator.dump();
-        OutputWrapper<Map<Nominal, Integer>> outputWrapper = wrapperFactory.createOutputWrapper();
+        Map<Nominal, Long> dump = cashManipulator.dump();
+        OutputWrapper<Map<Nominal, Long>> outputWrapper = wrapperFactory.createOutputWrapper();
         outputWrapper.setWrappedEntity(dump);
         prepareOutput(outputWrapper);
         return outputWrapper;
     }
 
-    private void prepareOutput(OutputWrapper<Map<Nominal, Integer>>  outputWrapper) {
+    private void prepareOutput(OutputWrapper<Map<Nominal, Long>>  outputWrapper) {
         StringBuilder outputRepresentation = new StringBuilder();
         outputWrapper.getWrappedEntity().entrySet().stream()
                 .filter(cashPair -> cashPair.getValue() != 0).forEach(cashPair ->

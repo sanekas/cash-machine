@@ -1,9 +1,10 @@
 package edu.sanekas.console.api;
 
-import edu.sanekas.wrapper.api.InputWrapper;
 import edu.sanekas.wrapper.api.OutputWrapper;
 
 public interface ConsoleProcesser {
-    InputWrapper getProcessedInput();
-    void printResult(OutputWrapper outputWrapper);
+    String readInput();
+    String printOutput(OutputWrapper outputWrapper);
+    String printError(Throwable throwable);
+    void closeInputStream();
 }

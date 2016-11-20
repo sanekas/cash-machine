@@ -41,6 +41,7 @@ public class CashMachineSmokeIntegrationTest {
 
 			System.setIn(FILE_INPUT_STREAM);
 			System.setOut(new PrintStream(FILE_OUTPUT_STREAM, true));
+			System.setErr(new PrintStream(FILE_OUTPUT_STREAM));
 
 		} catch (Exception e) {
 			LOGGER.error("Fail to init IO files", e);
@@ -53,7 +54,7 @@ public class CashMachineSmokeIntegrationTest {
 	}
 
 	@Test
-	public void basicIntegrationTest() throws IOException {
+	public void smokeIntegrationTest() throws IOException {
 		List<String> out = Files.readAllLines(Paths.get(SYSTEM_OUT_FILE.getPath()));
 		List<String> outEtalon = Files.readAllLines(Paths.get(SYSTEM_OUT_ETALON.getPath()));
 		List<String> valuableOut = out.subList(out.size() - 11, out.size()); // last 11 strings are CashMachine output

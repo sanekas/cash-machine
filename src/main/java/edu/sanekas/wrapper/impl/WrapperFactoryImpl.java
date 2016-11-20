@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class WrapperFactoryImpl implements WrapperFactory {
 
     @Override
-    public InputWrapper createInputWrapper(Operation operation, Nominal nominal, Integer cash) {
+    public InputWrapper createInputWrapper(Operation operation, Nominal nominal, Long cash) {
         return new InputWrapperImpl(operation, nominal, cash);
     }
 

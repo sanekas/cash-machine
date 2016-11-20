@@ -6,5 +6,8 @@ import edu.sanekas.api.Operation;
 public interface InputWrapper {
     Operation getOperation();
     Nominal getNominal();
-    Integer getCash();
+    Long getCash();
+    void setOperation(Operation operation);
+    void setNominal(Nominal nominal);
+    void setCash(Long cash);
 }

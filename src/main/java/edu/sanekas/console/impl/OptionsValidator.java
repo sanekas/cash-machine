@@ -36,7 +36,7 @@ public class OptionsValidator implements Validator {
      */
     private InputWrapper validatePutOptions(String[] options) {
         Nominal nominal = Nominal.getValue(Integer.parseInt(options[0]));
-        Integer numberOfRequestedMoney = Integer.parseInt(options[1]);
+        Long numberOfRequestedMoney = Long.parseLong(options[1]);
 
         if (numberOfRequestedMoney > 0) {
             return wrapperFactory.createInputWrapper(Operation.PUT, nominal, numberOfRequestedMoney);
@@ -50,7 +50,7 @@ public class OptionsValidator implements Validator {
      * @return processed "GET" command options
      */
     private InputWrapper validateGetOptions(String[] options) {
-        Integer numberOfRequestedMoney = Integer.parseInt(options[0]);
+        Long numberOfRequestedMoney = Long.parseLong(options[0]);
         if (numberOfRequestedMoney > 0) {
             return wrapperFactory.createInputWrapper(Operation.GET, Nominal.ANY, numberOfRequestedMoney);
         } else {

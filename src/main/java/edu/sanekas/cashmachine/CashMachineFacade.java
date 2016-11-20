@@ -8,9 +8,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("!test")
 public class CashMachineFacade implements ApplicationRunner {
     private Logger LOGGER = Logger.getLogger(CashMachineFacade.class);
 
