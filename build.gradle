@@ -11,6 +11,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
@@ -32,3 +33,12 @@ dependencies {
 	compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+jacocoTestReport {
+	reports {
+		xml.enabled = true
+		html.enabled = true
+	}
+}
+
+check.dependsOn jacocoTestReport
