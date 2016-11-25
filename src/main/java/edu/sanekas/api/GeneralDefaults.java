@@ -7,6 +7,8 @@ public class GeneralDefaults {
     public static final String INVALID_NOMINAL = "Nominal is invalid!";
     public static final String OPERATION_NOT_EXIST = "Operation %s doesn't exist!";
     public static final String PREFIX = ">";
+
+    private GeneralDefaults() {}
 }
 
 

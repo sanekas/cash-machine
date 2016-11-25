@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 public final class CommandExecutorImpl implements CommandExecutor {
 
-    private static final Map<Operation, Command> operationCommandMap = new EnumMap<>(Operation.class);
+    private static final Map<Operation, Command> OPERATION_COMMAND_MAP = new EnumMap<>(Operation.class);
 
     private final CommandFactory commandFactory;
 
@@ -28,12 +28,12 @@ public final class CommandExecutorImpl implements CommandExecutor {
 
     private void initCommandMap() {
         Arrays.asList(Operation.values()).forEach((Operation operation) ->
-                                operationCommandMap.put(operation, commandFactory.createCommand(operation)));
+                                OPERATION_COMMAND_MAP.put(operation, commandFactory.createCommand(operation)));
     }
 
 
     @Override
     public final OutputWrapper execute(InputWrapper inputWrapper) {
-        return operationCommandMap.get(inputWrapper.getOperation()).execute(inputWrapper);
+        return OPERATION_COMMAND_MAP.get(inputWrapper.getOperation()).execute(inputWrapper);
     }
 }
