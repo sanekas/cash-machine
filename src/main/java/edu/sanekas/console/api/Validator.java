@@ -4,7 +4,7 @@ import edu.sanekas.api.Operation;
 import edu.sanekas.wrapper.api.InputWrapper;
 
 /**
- * Different implementations of this class validate I/O
+ * Different implementations of this interface validate I/O
  */
 public interface Validator {
     InputWrapper validateOptions(Operation operation, String[] options);

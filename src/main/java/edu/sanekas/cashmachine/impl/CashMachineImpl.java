@@ -39,7 +39,7 @@ public class CashMachineImpl implements CashMachine {
     }
 
     public OutputWrapper executeCommand(InputWrapper inputWrapper) {
-        return commandExecutor.execute(inputWrapper);
+        return commandExecutor.executeCommand(inputWrapper);
     }
 
     public void processOutput(OutputWrapper outputWrapper) {
